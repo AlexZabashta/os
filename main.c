@@ -23,11 +23,11 @@ void searchNewLines(int len)
 
 int main (int argc, char **argv)
 {	
-	/*while (*(argv[1]) != '\0')
+	while (*(argv[1]) != '\0')
 	{
 		bufferSize *= 10;
 		bufferSize += *((argv[1])++) - '0';
-	}*/
+	}
 	
 	buffer = malloc(sizeof(char) * bufferSize);	
 	
