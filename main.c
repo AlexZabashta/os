@@ -4,6 +4,12 @@
 char *buffer;
 int bufferSize = 0;
 
+void printBuffer (int start, int finish)
+{
+	write(1, buffer + start, finish - start);
+	write(1, buffer + start, finish - start);
+}
+
 int main (int argc, char **argv)
 {	
 	while (*(argv[1]) != '\0')
@@ -27,10 +33,4 @@ int main (int argc, char **argv)
 	
 	return 0;
 	
-}
-
-void printBuffer (int start, int finish)
-{
-	write(1, buffer + start, finish - start);
-	write(1, buffer + start, finish - start);
 }
