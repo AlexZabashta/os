@@ -13,6 +13,14 @@ void printBuffer (int start, int finish)
 	write(1, buffer + start, finish - start);
 }
 
+void searchNewLines(int len)
+{
+	for (i = last; i < len; i++)
+	{
+		
+	}			
+}
+
 int main (int argc, char **argv)
 {	
 	/*while (*(argv[1]) != '\0')
@@ -31,15 +39,12 @@ int main (int argc, char **argv)
 		{
 			for (i = 0; i < len; i++)
 			{
-			
+				
 			}
 		}
 		else
 		{
-			for (i = last; i < len; i++)
-			{
 			
-			}			
 		}
 		
 		if (len < bufferSize)
