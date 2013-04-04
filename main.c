@@ -37,17 +37,21 @@ int main (int argc, char **argv) {
 
 		}
 		offset = 0;
-		searchNewLines();
-		if (isOverFlow) 
-		{
-			for (i = 0; i < len; i++)
-			{
-				
+		for (i = offset; i < len; i++) {
+			if (buffer[i] == '\n') {
+				if (isOverFlow) {
+					if (i + 1 != len) {
+						offset = i + 1;
+						isOverFlow = 0;
+						break;
+					}
+					offset = len;
+
+				} else {
+					printBuffer(i + 1);
+					offset = i + 1;
+				}
 			}
-		}
-		else
-		{
-			
 		}
 		
 		if (len < bufferSize)
