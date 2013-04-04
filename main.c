@@ -16,17 +16,27 @@ void printBuffer (int finish) {
 }
 
 int main (int argc, char **argv) {	
-	while (*(argv[1]) != '\0')
-	{
+	while (*(argv[1]) != '\0') {
 		bufferSize *= 10;
 		bufferSize += *((argv[1])++) - '0';
 	}
 	
+	bufferSize++;
 	buffer = malloc(sizeof(char) * bufferSize);	
 	
-	while (1)
-	{
-		len = read(0, buffer + last, bufferSize);
+	while (1) {
+		len = offset;
+
+		while (len < bufferSize) {
+			n = read(0, buffer + len, bufferSize - len);			
+			if (n == 0) {
+				isEnd = 1;
+				break;
+			}
+			len += n;
+
+		}
+		offset = 0;
 		searchNewLines();
 		if (isOverFlow) 
 		{
