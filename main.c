@@ -15,22 +15,7 @@ void printBuffer (int finish) {
 	write(1, buffer + offset, finish - offset);
 }
 
-void searchNewLines()
-{
-	for (i = last; i < len; i++)
-	{
-		if (*(buffer + i) == '\n')
-		{
-			printBuffer(last, i + 1);
-			last = i + 1;
-			isOverFlow = 0;
-		}
-	}
-	
-}
-
-int main (int argc, char **argv)
-{	
+int main (int argc, char **argv) {	
 	while (*(argv[1]) != '\0')
 	{
 		bufferSize *= 10;
