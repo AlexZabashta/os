@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 char *buffer;
+
 int i;
 int n;
 int len = 0;
@@ -16,15 +17,15 @@ void printBuffer (int finish) {
 }
 
 int main (int argc, char **argv) {	
-	while (*(argv[1]) != '\0') {
+	while (*(argv[1]) != '\0')
+	{
 		bufferSize *= 10;
 		bufferSize += *((argv[1])++) - '0';
 	}
-	
 	bufferSize++;
 	buffer = malloc(sizeof(char) * bufferSize);	
 	
-	while (1) {
+	while (1) {		
 		len = offset;
 
 		while (len < bufferSize) {
@@ -37,6 +38,7 @@ int main (int argc, char **argv) {
 
 		}
 		offset = 0;
+
 		for (i = offset; i < len; i++) {
 			if (buffer[i] == '\n') {
 				if (isOverFlow) {
@@ -53,11 +55,19 @@ int main (int argc, char **argv) {
 				}
 			}
 		}
-		
-		if (len < bufferSize)
-		{
+		if (offset != 0) {
+			if (isEnd) {
+				printBuffer(len);
+			}
+			memmove(buffer, buffer + offset, len - offset);			
+			offset = len - offset;
+		} else {
+			isOverFlow = 1;
+		}
+		if (isEnd) {
 			break;
 		}
 	}
+	
 	return 0;
 }
