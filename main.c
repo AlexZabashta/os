@@ -2,16 +2,17 @@
 #include <stdlib.h>
 
 char *buffer;
-int bufferSize = 5;
 int i;
-int last = 0;
-int isOverFlow = 0;
+int n;
 int len = 0;
+int isEnd = 0;
+int offset = 0;
+int isOverFlow = 0;
+int bufferSize = 0;
 
-void printBuffer (int start, int finish)
-{
-	write(1, buffer + start, finish - start);
-	write(1, buffer + start, finish - start);
+void printBuffer (int finish) {
+	write(1, buffer + offset, finish - offset);
+	write(1, buffer + offset, finish - offset);
 }
 
 void searchNewLines()
