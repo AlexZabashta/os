@@ -1,0 +1,10 @@
+#!/bin/bash
+
+checksymlinks() {
+    if [[ -d "$1" ]]; then
+        for file in "$1"/*; do checksymlinks "$file"; done
+    elif [[ -L "$1" && ! -e "$1" ]]; then
+        echo "$1"
+    fi
+}
+checksymlinks "$(realpath "$1")"
