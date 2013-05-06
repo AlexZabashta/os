@@ -57,7 +57,7 @@ int main (int argc, char **argv) {
 				}
 			}
 		}
-		if (offset != 0 || isEnd) {
+		if (offset != 0) {
 			if (isEnd) {
 				printBuffer(len);
 			}
