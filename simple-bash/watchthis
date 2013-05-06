@@ -1,0 +1,17 @@
+#!/bin/bash
+
+time=$1
+shift
+old=""
+
+while [ : ] ; do
+    new=$($@)
+    if [ "$old" ] ; then
+        diff -u <(echo "$old") <(echo "$new")
+        if [ "$?" -eq 0 ] ; then
+            echo "unified diff"
+        fi
+    fi
+    old="$new"
+    sleep "$time"
+done
