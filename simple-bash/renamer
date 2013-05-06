@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for oldname in "$@" ; do
+    [[ -e "$oldname" ]] || continue
+    echo "$oldname"
+    read newname
+    if [ "$newname" ] ; then
+        mv "$oldname" "$newname"
+    fi
+done
