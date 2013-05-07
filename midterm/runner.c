@@ -24,7 +24,6 @@ int bufferOffset = 0;
 void execLine(char *in, char *com, char **args, char *out) {
     int inFile = open (in, O_RDONLY);
     int outFile = open (out, O_WRONLY);
-    perror(out)    ;
     stack[sp - 1] = 0;
     sp = 0;
         
