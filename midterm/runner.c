@@ -21,13 +21,13 @@ int bufferSize = 8192;
 int fileOffset = 0;
 int bufferOffset = 0;
 
-void execLine(char *in, char *com, char **args, char *out) {
-    int inFile = open (in, O_RDONLY);
-    int outFile = open (out, O_WRONLY);
+void execLine(char *in, char *com, char **args, char *out) {    
     stack[sp - 1] = 0;
     sp = 0;
         
-    if(!fork()) {        
+    if(!fork()) {
+		int inFile = open (in, O_RDONLY);
+		int outFile = open (out, O_WRONLY);
         dup2(inFile, 0);
         dup2(outFile, 1);    
         execv(com, args);        
