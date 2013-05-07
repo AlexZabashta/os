@@ -26,14 +26,14 @@ void execLine(char *in, char *com, char **args, char *out) {
     sp = 0;
         
     if(!fork()) {
-		int inFile = open (in, O_RDONLY);
-		int outFile = open (out, O_WRONLY);
+        int inFile = open (in, O_RDONLY);
+        int outFile = open (out, O_WRONLY);
         dup2(inFile, 0);
         dup2(outFile, 1);    
         execv(com, args);        
         sleep(1);    
-		close(outFile);
-		close(inFile);
+        close(outFile);
+        close(inFile);
     }    
 }
 
