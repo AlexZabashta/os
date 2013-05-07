@@ -32,10 +32,9 @@ void execLine(char *in, char *com, char **args, char *out) {
         dup2(outFile, 1);    
         execv(com, args);        
         sleep(1);    
-    }
-    close(outFile);
-    close(inFile);
-    
+		close(outFile);
+		close(inFile);
+    }    
 }
 
 void execBuffer(int finish) {    
@@ -71,12 +70,7 @@ int main (int argc, char **argv) {
             }
             len += n;            
         }
-        offset = 0;
-        for (i = 0; i < len; i++) {
-            if (buffer[i] == '_') {
-                buffer[i] = '\0';
-            }
-        }
+        offset = 0;        
         for (i = 0; i < len; i++) {
             if (buffer[i] == '\0') {                
                 execBuffer(i + 1);
