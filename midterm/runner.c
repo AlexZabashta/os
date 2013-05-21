@@ -24,7 +24,7 @@ int bufferOffset = 0;
 void execLine(char *in, char *com, char **args, char *out) {    
     stack[sp - 1] = 0;
     sp = 0;
-        
+    
     if(!fork()) {
         int inFile = open (in, O_RDONLY);
         int outFile = open (out, O_WRONLY);
@@ -53,17 +53,22 @@ void execBuffer(int finish) {
 }
 
 int main (int argc, char **argv) {
-
-    buffer = malloc(sizeof(char) * bufferSize);
-    stack = malloc(sizeof(char) * 4096);
+    
+    
+    if (((buffer = malloc(bufferSize)) == NULL) | ((stack = malloc(4096)) == NULL)) {
+        return 1;
+    }
     
     int inFile = open (argv [1], O_RDONLY);
+    if (inFile == 0) {
+        return 1;
+    }
     
     while (1) {        
         len = offset;
 
         while (len < bufferSize) {                        
-            n =    read(inFile, buffer + len, bufferSize - len);
+            n = read(inFile, buffer + len, bufferSize - len);
             if (n == 0) {
                 isEnd = 1;
                 break;
