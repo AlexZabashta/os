@@ -119,6 +119,6 @@ int main (int argc, char **argv) {
             break;
         }
     }
-    
+    free(buffer);
     return 0;
 }
