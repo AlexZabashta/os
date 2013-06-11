@@ -60,15 +60,17 @@ int main (int argc, char **argv) {
 			}
 		}
 		if (offset != 0 || isEnd) {
-			if (isEnd) {
-				printBuffer(buffer, offset, len);
-				break;
+			if (isEnd && offset != len) {
+				printBuffer(buffer, offset, len);				
 			}
 			memmove(buffer, buffer + offset, len - offset);
 			offset = len - offset;
 		} else {
 			isOverFlow = 1;
-		}		
+		}
+		if (isEnd) {
+	            break;
+	        }		
 	}
 	free(buffer);
 	return 0;
