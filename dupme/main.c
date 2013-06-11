@@ -3,77 +3,73 @@
 #include <unistd.h>
 #include <string.h>
 
-char *buffer;
 
-int i;
-int n;
-int len = 0;
-int isEnd = 0;
-int offset = 0;
-int isOverFlow = 0;
-int bufferSize = 0;
-
-void printBuffer (int finish) {
-    write(1, buffer + offset, finish - offset);
-    write(1, buffer + offset, finish - offset);
+void printBuffer (char *buffer, int offset, int finish) {
+	write(1, buffer + offset, finish - offset);
+	write(1, buffer + offset, finish - offset);
 }
 
 int main (int argc, char **argv) {
-    if (argc < 2) {
-        return 1;
-    }
-    while (*(argv[1]) != '\0') {
-        bufferSize *= 10;
-        bufferSize += *((argv[1])++) - '0';
-    }
-    bufferSize++;
-    if ((buffer = malloc(bufferSize)) == NULL) {
-        return 1;
-    }
-    
-    while (1) {        
-        len = offset;
 
-        while (len < bufferSize) {
-            n = read(0, buffer + len, bufferSize - len);
-            if (n == 0) {
-                isEnd = 1;
-                break;
-            }
-            len += n;
+	char *buffer;
+	int i;
+	int n;
+	int len = 0;
+	int isEnd = 0;
+	int offset = 0;
+	int isOverFlow = 0;
 
-        }
-        offset = 0;
+	if (argc < 2) {
+		return 1;
+	}
 
-        for (i = offset; i < len; i++) {
-            if (buffer[i] == '\n') {
-                if (isOverFlow) {
-                    if (i + 1 != len) {
-                        offset = i + 1;
-                        isOverFlow = 0;
-                        break;
-                    }
-                    offset = len;
+	int bufferSize = atoi(argv[1]) + 1;
 
-                } else {
-                    printBuffer(i + 1);
-                    offset = i + 1;
-                }
-            }
-        }
-        if (offset != 0 || isEnd) {
-            if (isEnd) {
-                printBuffer(len);
-            }
-            memmove(buffer, buffer + offset, len - offset);
-            offset = len - offset;
-        } else {
-            isOverFlow = 1;
-        }
-        if (isEnd) {
-            break;
-        }
-    }
-    free(buffer);
-    return 0;
+	if ((buffer = malloc(bufferSize)) == NULL) {
+		return 1;
+	}
+	
+	while (1) {		
+		len = offset;
+
+		while (len < bufferSize) {
+			n = read(0, buffer + len, bufferSize - len);
+			if (n == 0) {
+				isEnd = 1;
+				break;
+			}
+			len += n;
+
+		}
+		offset = 0;
+
+		for (i = offset; i < len; i++) {
+			if (buffer[i] == '\n') {
+				if (isOverFlow) {
+					if (i + 1 != len) {
+						offset = i + 1;
+						isOverFlow = 0;
+						break;
+					}
+					offset = len;
+
+				} else {
+					printBuffer(buffer, offset, i + 1);
+					offset = i + 1;
+				}
+			}
+		}
+		if (offset != 0 || isEnd) {
+			if (isEnd) {
+				printBuffer(buffer, offset, len);
+				break;
+			}
+			memmove(buffer, buffer + offset, len - offset);
+			offset = len - offset;
+		} else {
+			isOverFlow = 1;
+		}		
+	}
+	free(buffer);
+	return 0;
 }

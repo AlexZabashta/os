@@ -1,2 +1,3 @@
-main: main.c
-    gcc -Wall -Wextra -Werror main.c -o dupme
+all: main.c
+	gcc -o dupme -Wall -Wextra -Werror main.c
+
