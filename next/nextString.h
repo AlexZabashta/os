@@ -20,7 +20,7 @@ int next(struct StreamReader *s, char sep) {
 		if(s->len == s->size) {
 			if(s->l == 0) {
 				s->len = 0;
-				s->r--;
+				s->r--;				
 				return 2; // buffer overflow 0:[##### + c]:size => c != sep
 			}
 			memmove(s->buffer, s->buffer + s->l, s->len - s->l); // [####labcde] -> [labcde]
