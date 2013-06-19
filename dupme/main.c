@@ -2,76 +2,35 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
-
-void printBuffer (char *buffer, int offset, int finish) {
-	write(1, buffer + offset, finish - offset);
-	write(1, buffer + offset, finish - offset);
-}
+#include "./../next/nextString.h"
 
 int main (int argc, char **argv) {
 
-	char *buffer;
-	int i;
-	int n;
-	int len = 0;
-	int isEnd = 0;
-	int offset = 0;
-	int isOverFlow = 0;
+	struct StreamReader s;
+	s.fd = 0;
+	s.l = s.len = 0;
 
 	if (argc < 2) {
 		return 1;
 	}
+	s.size = atoi(argv[1]) + 1;
 
-	int bufferSize = atoi(argv[1]) + 1;
-
-	if ((buffer = malloc(bufferSize)) == NULL) {
+	if ((s.buffer = malloc(s.size)) == NULL) {
 		return 1;
 	}
-	
-	while (1) {		
-		len = offset;
 
-		while (len < bufferSize) {
-			n = read(0, buffer + len, bufferSize - len);
-			if (n == 0) {
-				isEnd = 1;
-				break;
-			}
-			len += n;
-
+	int state = 0;	
+	while (state != 3) {		
+		int tempState = next(&s, '\n');
+		if (tempState != 2 && state != 2 && s.l <= s.r)	{
+			write(1, s.buffer + s.l, s.r - s.l);
+			write(1, "\n", 1);
+			write(1, s.buffer + s.l, s.r - s.l);
+			write(1, "\n", 1);			
 		}
-		offset = 0;
-
-		for (i = offset; i < len; i++) {
-			if (buffer[i] == '\n') {
-				if (isOverFlow) {
-					if (i + 1 != len) {
-						offset = i + 1;
-						isOverFlow = 0;
-						break;
-					}
-					offset = len;
-
-				} else {
-					printBuffer(buffer, offset, i + 1);
-					offset = i + 1;
-				}
-			}
-		}
-		if (offset != 0 || isEnd) {
-			if (isEnd && offset != len) {
-				printBuffer(buffer, offset, len);				
-			}
-			memmove(buffer, buffer + offset, len - offset);
-			offset = len - offset;
-		} else {
-			isOverFlow = 1;
-		}
-		if (isEnd) {
-	            break;
-	        }		
+		s.l = s.r + 1;
+		state = tempState;
 	}
-	free(buffer);
+	free(s.buffer);
 	return 0;
 }
