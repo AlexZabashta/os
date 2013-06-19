@@ -25,6 +25,7 @@ int next(struct StreamReader *s, char sep) {
 			}
 			memmove(s->buffer, s->buffer + s->l, s->len - s->l); // [####labcde] -> [labcde]
 			s->len -= s->l;
+			s->r -= s->l;
 			s->l = 0;
 		}
 		size_t q = read(s->fd, s->buffer + s->len, s->size - s->len);
@@ -36,5 +37,5 @@ int next(struct StreamReader *s, char sep) {
 		s->len += q;
 		
 	}
-	return s->fd;
+	return 3;
 }
